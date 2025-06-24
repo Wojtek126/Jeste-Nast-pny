@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jesteś Następny – Zakład Pogrzebowy</title>
+  <link rel="icon" href="znicz.ico" type="image/x-icon" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #121212;
+      color: #f5f5f5;
+      scroll-behavior: smooth;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    body.light {
+      background-color: #f5f5f5;
+      color: #121212;
+    }
+    header, footer {
+      background-color: #1c1c1c;
+      padding: 40px;
+      text-align: center;
+      transition: background-color 0.5s;
+    }
+    body.light header, body.light footer {
+      background-color: #ddd;
+    }
+    header img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #e0e0e0;
+      animation: fadeIn 1.2s ease-in-out forwards;
+      transition: color 0.5s;
+    }
+    body.light header h1 {
+      color: #333;
+    }
+    nav {
+      background-color: #222;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      transition: background-color 0.5s;
+    }
+    body.light nav {
+      background-color: #eee;
+    }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    body.light nav a {
+      color: #333;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    body.light nav a:hover {
+      color: #000;
+    }
+    main {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 50px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h2 {
+      color: #dcdcdc;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+      transition: color 0.5s;
+    }
+    body.light h2 {
+      color: #444;
+      border-color: #aaa;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 12px;
+      text-align: left;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    th {
+      background-color: #2b2b2b;
+    }
+    td {
+      background-color: #1e1e1e;
+    }
+    body.light th {
+      background-color: #bbb;
+      color: #222;
+    }
+    body.light td {
+      background-color: #eee;
+      color: #222;
+    }
+    a {
+      color: #8ac6ff;
+      transition: color 0.3s;
+    }
+    body.light a {
+      color: #064f8c;
+    }
+    #dlaczego-my ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    #dlaczego-my li {
+      padding-left: 25px;
+      margin-bottom: 10px;
+      background: url('✔️') no-repeat left center;
+    }
+    input, textarea {
+      background-color: #1e1e1e;
+      color: #fff;
+      border: 1px solid #444;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1em;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    body.light input, body.light textarea {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #aaa;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #666;
+    }
+    body.light button {
+      background-color: #ccc;
+      color: #111;
+    }
+    body.light button:hover {
+      background-color: #aaa;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 10px 15px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.3s;
+    }
+    #backToTop:hover {
+      background: #555;
+    }
+    /* Testimonial slider */
+    #testimonials {
+      position: relative;
+      max-width: 700px;
+      margin: 30px auto;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      color: #ccc;
+      text-align: center;
+    }
+    body.light #testimonials {
+      background: #eee;
+      color: #333;
+    }
+    #testimonials blockquote {
+      font-style: italic;
+      margin: 0 0 15px;
+    }
+    #testimonials cite {
+      font-weight: bold;
+      font-style: normal;
+      color: #8ac6ff;
+    }
+    #testimonial-controls {
+      margin-top: 10px;
+    }
+    #testimonial-controls button {
+      background: transparent;
+      border: 1px solid #8ac6ff;
+      color: #8ac6ff;
+      padding: 5px 10px;
+      margin: 0 5px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #testimonial-controls button:hover {
+      background-color: #8ac6ff;
+      color: #121212;
+    }
+    body.light #testimonial-controls button {
+      border-color: #064f8c;
+      color: #064f8c;
+    }
+    body.light #testimonial-controls button:hover {
+      background-color: #064f8c;
+      color: #fff;
+    }
+    /* FAQ */
+    #faq dt {
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+      position: relative;
+      padding-right: 20px;
+    }
+    #faq dt::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 20px;
+      line-height: 1;
+      transition: transform 0.3s;
+    }
+    #faq dt.open::after {
+      content: '-';
+    }
+    #faq dd {
+      margin: 0 0 10px 0;
+      display: none;
+      padding-left: 15px;
+      border-left: 2px solid #8ac6ff;
+    }
+    body.light #faq dd {
+      border-color: #064f8c;
+    }
+    /* Gallery */
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    #gallery img {
+      width: 30%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    }
+    #gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #8ac6ff;
+    }
+    @media(max-width: 600px) {
+      #gallery img {
+        width: 80%;
+      }
+    }
+    /* Toggle Dark Mode button */
+    #toggle-theme {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #8ac6ff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #121212;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 1001;
+      transition: background-color 0.3s;
+    }
+    #toggle-theme:hover {
+      background-color: #064f8c;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <button id="toggle-theme" aria-label="Przełącz tryb jasny/ciemny">🌙</button>
+
+  <header>
+    <img src="logo.png" alt="Logo Zakład Pogrzebowy Jesteś Następny" />
+    <h1>Jesteś Następny</h1>
+    <p>Zakład Pogrzebowy • Private Limited Company (有限公司)</p>
+  </header>
+
+  <nav>
+    <a href="#o-nas">O nas</a>
+    <a href="#dlaczego-my">Dlaczego my?</a>
+    <a href="#uslugi">Usługi</a>
+    <a href="#cennik">Cennik</a>
+    <a href="#faq">FAQ</a>
+    <a href="#opinie">Opinie</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
+  <main>
+    <section id="o-nas">
+      <h2>O nas</h2>
+      <p>Zakład pogrzebowy "Jesteś Następny" oferuje kompleksowe usługi pogrzebowe w Hongkongu...</p>
+    </section>
+
+    <section id="dlaczego-my">
+      <h2>Dlaczego warto nas wybrać?</h2>
+      <ul>
+        <li>✔ Wieloletnie doświadczenie i certyfikowani pracownicy</li>
+        <li>✔ Całodobowa obsługa i elastyczność</li>
+        <li>✔ Pełna dyskrecja i empatia</li>
+        <li>✔ Współpraca z domami opieki i duchownymi</li>
+        <li>✔ Nowoczesne rozwiązania: transmisje online i rezerwacje</li>
+      </ul>
+    </section>
+
+    <section id="uslugi">
+      <h2>Nasze usługi</h2>
+      <ul>
+        <li>Organizacja pogrzebów tradycyjnych i kremacyjnych</li>
+        <li>Transport lokalny i międzynarodowy</li>
+        <li>Oprawa ceremonii, kwiaty, relacje online</li>
+        <li>Formalności urzędowe</li>
+        <li>Usługi dodatkowe: wieńce, fotografie, wideo</li>
+      </ul>
+    </section>
+
+    <section id="cennik">
+      <h2>Cennik</h2>
+      <p>Ceny usług są elastyczne i dostosowane do potrzeb oraz budżetu klienta. Oferujemy trzy główne pakiety:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Usługa/Pakiet</th>
+            <th>Zakres</th>
+            <th>Cena (HKD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pakiet Podstawowy</td>
+            <td>Transport, kremacja, urna, formalności</td>
+            <td>15,000 – 20,000</td>
+          </tr>
+          <tr>
+            <td>Pakiet Standardowy</td>
+            <td>+ ceremonia, kwiaty, kaplica, oprawa</td>
+            <td>25,000 – 40,000</td>
+          </tr>
+          <tr>
+            <td>Pakiet Premium</td>
+            <td>+ trumna, relacja online, indywidualna oprawa</td>
+            <td>45,000 – 70,000</td>
+          </tr>
+          <tr>
+            <td>Transport międzynarodowy</td>
+            <td>Zależny od kraju i trasy</td>
+            <td>od 20,000 wzwyż</td>
+          </tr>
+          <tr>
+            <td>Usługi dodatkowe</td>
+            <td>Wieńce, zdjęcia, video, konsjerż pogrzebowy</td>
+            <td>500 – 10,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ – Najczęściej zadawane pytania</h2>
+      <dl>
+        <dt>Czy możecie odebrać ciało z domu opieki?</dt>
+        <dd>Tak, współpracujemy z wieloma domami opieki, zapewniając transport i formalności.</dd>
+        <dt>Jakie są koszty trumny?</dt>
+        <dd>Ceny trumien różnią się w zależności od modelu i materiału, prosimy o kontakt w celu uzyskania szczegółów.</dd>
+        <dt>Czy oferujecie transmisje online z ceremonii?</dt>
+        <dd>Tak, w pakiecie Premium zapewniamy profesjonalne relacje online.</dd>
+        <dt>Jak długo trwa organizacja pogrzebu?</dt>
+        <dd>Standardowo organizacja trwa od 2 do 5 dni, zależnie od formalności i potrzeb klienta.</dd>
+      </dl>
+    </section>
+
+    <section id="opinie">
+      <h2>Opinie klientów</h2>
+      <div id="testimonials">
+        <blockquote id="testimonial-text">"Profesjonalna i pełna empatii obsługa w trudnych chwilach."</blockquote>
+        <cite id="testimonial-author">– Anna K.</cite>
+        <div id="testimonial-controls">
+          <button data-index="0">1</button>
+          <button data-index="1">2</button>
+          <button data-index="2">3</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria">
+      <h2>Galeria</h2>
+      <div id="gallery">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Kwiaty" />
+        <img src="https://images.unsplash.com/photo-1517686469429-6a14a9e0c9f6?auto=format&fit=crop&w=800&q=80" alt="Ceremonia" />
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Wieniec" />
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <h2>Kontakt</h2>
+      <p>
+        <strong>Adres:</strong> No. 77 Tai Tong Road, Yuen Long, New Territories, Hongkong<br />
+        <strong>Telefon:</strong> +48 123 456 789<br />
+        <strong>E-mail:</strong> <a href="mailto:chatgpd2.0@gmail.com">chatgpd2.0@gmail.com</a>
+      </p>
+
+      <h3>Formularz kontaktowy</h3>
+      <form id="contact-form">
+        <label for="name">Imię i nazwisko:</label><br />
+        <input type="text" id="name" name="name" required /><br />
+
+        <label for="email">Adres e-mail:</label><br />
+        <input type="email" id="email" name="email" required /><br />
+
+        <label for="message">Wiadomość:</label><br />
+        <textarea id="message" name="message" rows="5" required></textarea><br />
+
+        <button type="submit">Wyślij</button>
+      </form>
+      <p id="form-feedback" style="margin-top:15px; color:#8ac6ff;"></p>
+
+      <h3>Nasza lokalizacja</h3>
+      <div style="width:100%; height:300px; margin-top:20px;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.239688136649!2d114.02652787581082!3d22.44578967956103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f9369e9f45b3%3A0x75c2698e11743e2b!2sTai%20Tong%20Rd%2C%20Yuen%20Long%2C%20Hong%20Kong!5e0!3m2!1spl!2spl!4v1689988888888!5m2!1spl!2spl"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+
+  <button id="backToTop" title="Wróć na górę">↑</button>
+
+  <footer></footer>
+
+  <script>
+    // Stopka z aktualnym rokiem
+    document.addEventListener("DOMContentLoaded", function () {
+      const footer = document.querySelector("footer");
+      const year = new Date().getFullYear();
+      footer.innerHTML = `© ${year} Jesteś Następny – Zakład Pogrzebowy (有限公司). Wszelkie prawa zastrzeżone.`;
+    });
+
+    // Formularz kontaktowy
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector("#contact-form");
+      const feedback = document.querySelector("#form-feedback");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.querySelector("#name").value.trim();
+        const email = document.querySelector("#email").value.trim();
+        const message = document.querySelector("#message").value.trim();
+        if (!name || !email || !message) {
+          feedback.textContent = "Proszę wypełnić wszystkie pola.";
+          feedback.style.color = "red";
+          return;
+        }
+        feedback.textContent = "Dziękujemy za wiadomość. Skontaktujemy się wkrótce.";
+        feedback.style.color = "#8ac6ff";
+        form.reset();
+      });
+    });
+
+    // Efekt fade-in przy przewijaniu
+    const sections = document.querySelectorAll('section');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.9;
+      sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if (top < triggerBottom) {
+          section.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Przycisk wróć na górę
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Tryb dzienny/nocny toggle
+    const toggleThemeBtn = document.getElementById("toggle-theme");
+    toggleThemeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      if(document.body.classList.contains("light")) {
+        toggleThemeBtn.textContent = "🌙";
+      } else {
+        toggleThemeBtn.textContent = "☀️";
+      }
+    });
+
+    // Testimonial slider
+    const testimonials = [
+      { text: '"Profesjonalna i pełna empatii obsługa w trudnych chwilach."', author: "Anna K." },
+      { text: '"Szybka i sprawna organizacja pogrzebu, dziękujemy."', author: "Marek S." },
+      { text: '"Dzięki Wam ostatnie pożegnanie było bardzo godne."', author: "Ewa L." }
+    ];
+    let currentTestimonial = 0;
+    const testimonialText = document.getElementById("testimonial-text");
+    const testimonialAuthor = document.getElementById("testimonial-author");
+    const testimonialButtons = document.querySelectorAll("#testimonial-controls button");
+
+    function showTestimonial(index) {
+      currentTestimonial = index;
+      testimonialText.textContent = testimonials[index].text;
+      testimonialAuthor.textContent = `– ${testimonials[index].author}`;
+      testimonialButtons.forEach(btn => btn.disabled = false);
+      testimonialButtons[index].disabled = true;
+    }
+
+    testimonialButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        showTestimonial(parseInt(btn.dataset.index));
+      });
+    });
+
+    showTestimonial(0);
+
+    // FAQ toggle
+    const faqItems = document.querySelectorAll("#faq dt");
+    faqItems.forEach(dt => {
+      dt.addEventListener("click", () => {
+        dt.classList.toggle("open");
+        const dd = dt.nextElementSibling;
+        if(dd.style.display === "block") {
+          dd.style.display = "none";
+        } else {
+          dd.style.display = "block";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
